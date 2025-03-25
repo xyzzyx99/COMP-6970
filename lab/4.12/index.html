@@ -1,43 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <title>Product Rating</title>
-   
-      <style>
-         body {
+
+<head>
+    <title>Product Rating</title>
+    <meta charset="utf-8">
+ 
+    <style>
+        body {
             font-family: Calibri, Myriad;
-         }
-   
-         div {
+        }
+
+        div {
             margin-bottom: 5px;
-         }
-   
-         /* TODO: Add your solution here */
-   
-   
-      </style>
-   </head>
-   <body>
-      <h1>Rate a Product</h1>
-      <p><span class="required"></span> indicates required field.</p>
-      <form>
-         <div>
+        }
+
+
+        /* TODO: Add your solution here */
+        label {
+            display: inline-block;
+            /* Set the display property to inline-block */
+
+            width: 120px;
+            /* Set the width to 120 pixels */
+
+        }
+
+        input,
+        textarea {
+            width: 300px;
+            padding: 10px;
+
+        }
+
+        .required::after {
+            content: '*';
+            color: red;
+        }
+
+        label+input {
+            background: rgb(219, 241, 248);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Rate a Product</h1>
+    <p><span class="required"></span> indicates required field.</p>
+    <form>
+        <div>
             <label class="required">Product</label>
             <input type="text" name="title">
-         </div>
-         <div>
+        </div>
+        <div>
             <label class="required">Purchase Date</label>
             <input type="date" name="purchase-date">
-         </div>
-         <div>
+        </div>
+        <div>
             <label class="required">Rating</label>
             <input type="number" name="rating" value="4" min="1" max="4">
-         </div> 
-         <div> 
-            <label>Comments</label>      
-            <textarea rows="3" cols="50" name="comments"></textarea> 
-         </div>
-         <input type="submit" value="Submit Rating">
-      </form>
-   </body>
+        </div>
+        <div>
+            <label>Comments</label>
+            <textarea rows="3" cols="50" name="comments"></textarea>
+        </div>
+        <input type="submit" value="Submit Rating">
+    </form>
+</body>
+
 </html>
