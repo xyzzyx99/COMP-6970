@@ -9,7 +9,7 @@
 <body>
     <H1>Happy Birthday Message Creator</H1>
 
-    <form action="https://wp.zybooks.com/form-viewer.php" method="POST">
+    <form id="form" action="https://wp.zybooks.com/form-viewer.php" method="POST">
         <div>
             <p>
                 <label for="Message">
@@ -24,7 +24,7 @@
                 <label for="email">
                     EMail Address?
                 </label>
-                <input type="text" name="Email Address" id="email" onfocus="this.value=''" value="name@domain.com">
+                <input type="text" name="email" id="email" onfocus="this.value=''" value="name@domain.com" pattern="[a-zA-Z0-9-_\.]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*">
             </p>
         </div>
 
@@ -33,7 +33,7 @@
                 <label for="date">
                     Date to send?
                 </label>
-                <input type="date" name="Date" id="date">
+                <input type="date" name="date" id="date">
             </p>
         </div>
 
@@ -70,6 +70,31 @@
             </p>
         </div>
     </form>
+
+
+    <script>
+        document.getElementById("form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get the values from the form
+            let email = document.getElementById("email").value;
+
+            // Regular Expressions for validation
+            let emailRegex = /[a-zA-Z0-9-_\.]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*/;
+
+            // Validate email
+            if (!emailRegex.test(email)) {
+                alert("Invalid email address!");
+                return;
+            }
+
+            // If all validations pass
+            alert("Form submitted successfully!");
+
+            // Clear the form after successful submission
+            document.getElementById("myForm").reset();
+        });
+    </script>
 
 </body>
 
