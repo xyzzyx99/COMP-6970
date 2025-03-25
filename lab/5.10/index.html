@@ -1,22 +1,60 @@
 <!DOCTYPE HTML>
-<html>
-   <head>
-      <title>Tic-Tac-Toe</title> 
-      <link rel="stylesheet" href="styles.css">
-   </head>
-   <body>
-      <h1>Tic-Tac-Toe</h1>
-        
-      <div id="board">
-         <div class="x">X</div>
-         <div class="o">O</div>
-         <div></div>
-         <div></div>
-         <div class="x">X</div>
-         <div></div>
-         <div class="o">O</div>
-         <div></div>
-         <div class="x">X</div>
-      </div>
-   </body>
+<html lang="en">
+
+<head>
+    <title>Tic-Tac-Toe</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            font-family: Roboto, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        #board {
+            font: 85px arial, sans-serif;
+            margin: 3px;
+
+            /* TODO: Add your solution here */
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+            grid-gap: 10px;
+            justify-content: center;
+        }
+
+        #board>div {
+            border: 1px solid LightSkyBlue;
+            text-align: center;
+        }
+
+        .x {
+            color: red;
+        }
+
+        .o {
+            color: blue;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <h1>Tic-Tac-Toe</h1>
+
+    <div id="board" class='wrapper'>
+        <div class="x">X</div>
+        <div class="o">O</div>
+        <div></div>
+        <div></div>
+        <div class="x">X</div>
+        <div></div>
+        <div class="o">O</div>
+        <div></div>
+        <div class="x">X</div>
+    </div>
+</body>
+
 </html>
