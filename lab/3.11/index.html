@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Happy Birthday Message Creator</title>
+</head>
+
+<body>
+    <H1>Happy Birthday Message Creator</H1>
+
+    <form action="https://wp.zybooks.com/form-viewer.php" method="POST">
+        <div>
+            <p>
+                <label for="Message">
+                    Message?
+                </label>
+                <input type="text" name="Message" id="Message" value="Happy Birthday!">
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <label for="email">
+                    EMail Address?
+                </label>
+                <input type="text" name="Email Address" id="email" onfocus="this.value=''" value="name@domain.com">
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <label for="date">
+                    Date to send?
+                </label>
+                <input type="date" name="Date" id="date">
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <label for="color">
+                    Message color?
+                </label>
+                <input type="color" name="color" id="color">
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <label for="blinks">
+                    Number of blinks?
+                </label>
+                <input type="number" min="0" max="10" name="blinks" id="blinks" value="0">
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <label for="volume">
+                    Music volume?
+                </label>
+                <input type="range" min="0" max="50" name="volume" id="volume" value="20">
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <button type="submit">Send Birthday Message</button>
+            </p>
+        </div>
+    </form>
+
+</body>
+
+</html>
