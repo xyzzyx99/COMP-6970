@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Starting Lineup</title>
+</head>
+
+<body>
+    <H1>Starting Lineup</H1>
+
+    <form id="form" action="https://wp.zybooks.com/form-viewer.php" method="POST">
+
+        <div>
+
+            <fieldset>
+                <legend>Status:</legend>
+
+                <p>
+                    <input type="radio" id="Draft" name="status" value="Draft">
+                    <label for="Draft">Draft</label>
+                    <input type="radio" id="Final" name="status" value="Final" checked>
+                    <label for="Final">Final</label>
+                </p>
+
+            </fieldset>
+
+        </div>
+
+        <div>
+            <p>
+                <label for="gameDate">Date:</label>
+
+                <select name="gameDate" id="gameDate">
+                    <option value="March 20">March 20</option>
+                    <option value="March 24">March 24</option>
+                    <option value="April 2">April 2</option>
+                    <option value="April 6">April 6</option>
+                    <option value="April 13">April 13</option>
+                </select>
+            </p>
+        </div>
+
+
+        <div>
+            <fieldset>
+                <legend>Players:</legend>
+
+                <p>
+                    <input type="checkbox" id="Aarav" name="Aarav">
+                    <label for="Aarav">Aarav Agarwal</label>
+                </p>
+
+                <p>
+                    <input type="checkbox" id="Ava" name="Ava">
+                    <label for="Ava">Ava Johnson</label>
+                </p>
+
+                <p>
+                    <input type="checkbox" id="Julio" name="Julio">
+                    <label for="Julio">Julio Ortiz</label>
+                </p>
+                <p>
+                    <input type="checkbox" id="Liam" name="Liam">
+                    <label for="Liam">Liam Rubio</label>
+                </p>
+                <p>
+                    <input type="checkbox" id="Emma" name="Emma">
+                    <label for="Emma">Emma Witherspoon</label>
+                </p>
+
+            </fieldset>
+        </div>
+
+        <div>
+            <p>
+                <input type="Submit">
+            </p>
+        </div>
+    </form>
+
+
+
+</body>
+
+</html>
