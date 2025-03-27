@@ -2,62 +2,62 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Join a social network</title>
-    <style>
-        label {
-            display: inline-block;
-            /* Set the display property to inline-block */
+   <meta charset="utf-8">
+   <title>Join a social network</title>
+   <style>
+      label {
+         display: inline-block;
+         /* Set the display property to inline-block */
 
-            width: 120px;
-            /* Set the width to 120 pixels */
+         width: 120px;
+         /* Set the width to 120 pixels */
 
-        }
-    </style>
+      }
+   </style>
 
 </head>
 
 <body>
-    <H1>Join a social network</H1>
+   <H1>Join a social network</H1>
 
-    <form action="https://wp.zybooks.com/form-viewer.php" method="POST">
-        <div>
-            <label for="fullName">
-                Full Name:
+   <form action="https://wp.zybooks.com/form-viewer.php" method="POST" enctype="multipart/form-data">
+      <div>
+         <label for="fullName">
+                Full name:
             </label>
-            <input type="text" name="fullName" id="fullName" required>
-        </div>
+         <input type="text" name="fullName" id="fullName" required>
+      </div>
 
-        <div>
-            <p>
-                <label for="email">
-                    EMail Address:
+      <div>
+         <p>
+            <label for="email">
+                    Email address:
                 </label>
-                <input type="text" name="email" id="email" required>
-            </p>
-        </div>
+            <input type="text" name="email" id="email" required>
+         </p>
+      </div>
 
-        <div>
-            <p>
-                <label for="about">
+      <div>
+         <p>
+            <label for="about">
                     About you:
                 </label>
-                <textarea id="about" name="about" rows="3" cols="50"></textarea>
-            </p>
-        </div>
+            <textarea id="about" name="about" rows="3" cols="50"></textarea>
+         </p>
+      </div>
 
-        <div>
-            <label for="picture">
+      <div>
+         <label for="picture">
                 Photo:
             </label>
-            <input type="file" id="picture" name="picture" accept="image/png, image/jpeg">
-        </div>
-        <div>
-            <p>
-                <input type="submit">
-            </p>
-        </div>
-    </form>
+         <input type="file" id="picture" name="picture" accept="image/png, image/jpeg">
+      </div>
+      <div>
+         <p>
+            <input type="submit">
+         </p>
+      </div>
+   </form>
 
 </body>
 
