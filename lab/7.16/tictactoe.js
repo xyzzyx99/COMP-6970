@@ -93,19 +93,15 @@ function boardButtonClicked(button) {
     // TODO: Complete the function
 
     if (!playerTurn)
-        playerTurn = !playerTurn;
+        playerTurn = !playerTurn;  // patch for first time
 
     if (playerTurn) {
         button.textContent = "X";
         button.className = "x";
         button.disabled = true;
-        document.getElementById("turnInfo").innerText = "Computer's turn";
 
-        //playerTurn = !playerTurn; //true;
         switchTurn();
-
     }
-    //playerTurn = !playerTurn; //true;
 }
 
 
