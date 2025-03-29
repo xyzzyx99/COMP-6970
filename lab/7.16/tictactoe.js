@@ -1,7 +1,5 @@
 let playerTurn = true;
 let computerMoveTimeout = 0;
-let playerClicked = false;
-let computerClicked = false;
 
 const gameStatus = {
     MORE_MOVES_LEFT: 1,
@@ -94,44 +92,27 @@ function newGame() {
 function boardButtonClicked(button) {
     // TODO: Complete the function
 
+    if (!playerTurn)
+        playerTurn = !playerTurn;
+
     if (playerTurn) {
         button.textContent = "X";
         button.className = "x";
         button.disabled = true;
-        //playerTurn = false; //!playerTurn; //true;
-        playerClicked = true;
-        playerTurn = false;
         document.getElementById("turnInfo").innerText = "Computer's turn";
 
         //playerTurn = !playerTurn; //true;
         switchTurn();
 
     }
+    //playerTurn = !playerTurn; //true;
 }
 
-/*
-function checkBoardStatus() {
-    let status = checkForWinner();
-
-    if (status == gameStatus.HUMAN_WINS) {
-        document.getElementById("turnInfo").innerText = "You win!";
-    } else if (status == gameStatus.COMPUTER_WINS) {
-        document.getElementById("turnInfo").innerText = "Computer wins!";
-
-    } else if (status == gameStatus.DRAW_GAME) {
-        document.getElementById("turnInfo").innerText = "Draw game";
-    }
-
-
-}
-*/
 
 function disableBoardButton() {
     let buttons = getGameBoardButtons(); //document.getElementById("gameBoard");
     for (let i = 0; i < buttons.length; i++) {
-        //buttons[i].textContent = "";
         buttons[i].disabled = true;
-        //buttons[i].className = "";
     }
 
 
@@ -144,24 +125,14 @@ function switchTurn() {
 
     if (status == gameStatus.MORE_MOVES_LEFT) {
 
-        if (!playerTurn) {
-            //playerTurn = false;
+        if (playerTurn) {
+            playerTurn = !playerTurn; //true;
             if (playerTurn) {
                 document.getElementById("turnInfo").innerText = "Your turn";
             } else {
                 document.getElementById("turnInfo").innerText = "Computer's turn";
             }
             computerMoveTimeout = setTimeout(makeComputerMove, 1000);
-
-            playerTurn = !playerTurn; //true;
-            /*if (playerTurn) {
-                document.getElementById("turnInfo").innerText = "Your turn";
-            } else {
-                document.getElementById("turnInfo").innerText = "Computer's turn";
-            }*/
-
-
-            //playerTurn = !playerTurn; //true;
 
         }
 
@@ -170,18 +141,12 @@ function switchTurn() {
         playerTurn = false;
         disableBoardButton();
 
-        //status = checkForWinner();
-
         if (status == gameStatus.HUMAN_WINS) {
             document.getElementById("turnInfo").innerText = "You win!";
         } else if (status == gameStatus.COMPUTER_WINS) {
             document.getElementById("turnInfo").innerText = "Computer wins!";
-            //disableBoardButton();
-
         } else if (status == gameStatus.DRAW_GAME) {
             document.getElementById("turnInfo").innerText = "Draw game";
-            //disableBoardButton();
-
         }
     }
 
@@ -208,11 +173,7 @@ function makeComputerMove() {
     randomButton.className = "o";
     randomButton.disabled = true;
 
-    //playerTurn = true;
     document.getElementById("turnInfo").innerText = "Your turn";
-    //playerTurn = true;
-//            playerClicked = false;
-
 
     switchTurn();
 
