@@ -1,5 +1,6 @@
 let playerTurn = true;
 let computerMoveTimeout = 0;
+let firstMove = true;
 
 const gameStatus = {
     MORE_MOVES_LEFT: 1,
@@ -78,6 +79,7 @@ function newGame() {
     computerMoveTimeout = 0;
     playerTurn = true;
     document.getElementById("turnInfo").innerText = "Your turn";
+    firstMove = true;
 
     let buttons = getGameBoardButtons(); //document.getElementById("gameBoard");
     for (let i = 0; i < buttons.length; i++) {
@@ -85,15 +87,17 @@ function newGame() {
         buttons[i].disabled = false;
         buttons[i].className = "";
     }
-
-
 }
 
 function boardButtonClicked(button) {
     // TODO: Complete the function
 
-    if (!playerTurn)
-        playerTurn = !playerTurn;  // patch for first time
+/*    if (firstMove) {
+        firstMove = false;
+        playerTurn = true; // patch for first time
+    }
+*/
+    playerTurn = true;
 
     if (playerTurn) {
         button.textContent = "X";
@@ -110,8 +114,6 @@ function disableBoardButton() {
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].disabled = true;
     }
-
-
 }
 
 function switchTurn() {
@@ -145,8 +147,6 @@ function switchTurn() {
             document.getElementById("turnInfo").innerText = "Draw game";
         }
     }
-
-
 }
 
 function makeComputerMove() {
