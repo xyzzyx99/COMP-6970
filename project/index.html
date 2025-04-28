@@ -55,7 +55,7 @@
 <body>
     <div class="container">
         <h2>Study Group Bulletin Board System</h2>
-        <form action="/login" method="POST">
+        <form id="login">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -70,5 +70,8 @@
             </div>
         </form>
     </div>
+
+    <script type="module" src="login.js"></script> <!-- Note: type="module" -->
+
 </body>
 </html>

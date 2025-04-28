@@ -16,7 +16,7 @@ app.post('/userCreation', (req, res) => {
     const obj = { user: { username, password, accessibility } };
     const xml = builder.buildObject(obj);
 
-    fs.writeFile('form1_data.xml', xml, (err) => {
+    fs.writeFile('user_data.xml', xml, (err) => {
         if (err) return res.status(500).send('Error saving Form 1');
         res.send('Form 1 received!');
     });
@@ -34,6 +34,7 @@ app.post('/submitForm2', (req, res) => {
         res.send('Form 2 received!');
     });
 });
+
 
 app.get('/profile', (req, res) => {
     const parser = new xml2js.Parser();
@@ -74,6 +75,10 @@ app.get('/profile', (req, res) => {
             res.send(html);
         });
     });
+});
+
+app.get('/userRead', (req, res) => {
+    res.sendFile(path.join(__dirname, 'user_data.xml'));
 });
 
 
