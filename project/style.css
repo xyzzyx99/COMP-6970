@@ -1,0 +1,74 @@
+.container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.container_edit_post {
+    width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+/* Center align the buttons */
+.form-group:last-child {
+    text-align: center;
+}
+.form-group:last-child .btn {
+    margin: 0 5px;
+}
+/* Add hover effect for better user experience */
+.btn:hover {
+    opacity: 0.9;
+    transition: opacity 0.2s;
+}
+
+.accessibility-large * {
+    font-size: 1.25rem; /* Bootstrap uses rem, better to match */
+}
+
+.accessibility-normal * {
+    font-size: 1rem; /* Default Bootstrap font size */
+}
+
+#contentForm {
+    max-width: 1000px !important; /* or whatever original width you want */
+    width: 100% !important;
+}
+
+#frame {
+    max-width: 1600px !important; /* or whatever original width you want */
+    width: 90% !important;
+}

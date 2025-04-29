@@ -2,11 +2,33 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const xml2js = require('xml2js');
+//const multer = require('multer');
 
 const app = express();
 const PORT = 3000;
 
+// Import your post routes
+const postRoute = require('./routes/postRoute');
+
+// Middleware to parse form data and JSON
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Serve static files (like your HTML form)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve uploaded images statically (optional, but useful)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Mount your postRoute router
+app.use('/', postRoute);
+
+//app.use(express.json());
+
+app.use(express.json({ limit: '10mb' }));
+
+// Increase limit for URL-encoded form data
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, '.')));
 
 // Handle Form 1
@@ -19,6 +41,37 @@ app.post('/userCreation', (req, res) => {
     fs.writeFile('user_data.xml', xml, (err) => {
         if (err) return res.status(500).send('Error saving Form 1');
         res.send('Form 1 received!');
+    });
+});
+
+app.use(express.text({ type: 'application/xml' }));
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // 'uploads' folder in your server directory
+    },
+    filename: (req, file, cb) => {
+        // Save with original name or timestamped version to avoid collisions
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
+
+//const upload = multer({ limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit
+
+app.post('/createPost1', (req, res) => {
+    const xmlData = req.body;
+    // Save xmlData to a file
+    fs.writeFile('submitted_content.xml', xmlData, (err) => {
+        if (err) {
+            console.error('Error saving file:', err);
+            return res.status(500).send('Failed to save content.');
+        }
+        console.log('Content saved successfully.');
+        res.send('Content saved.');
     });
 });
 
