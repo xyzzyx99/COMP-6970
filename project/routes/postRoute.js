@@ -4,7 +4,7 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 
-// Configure multer to save files to /uploads folder
+// Multer config
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/');
@@ -13,28 +13,43 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname);
     }
 });
+const upload = multer({ storage: storage });
 
-const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 } }); // 10 MB limit
+const xmlFilePath = path.join(__dirname, '..', 'posts.xml'); // still posts.xml
 
-// Handle POST /createPost
 router.post('/createPost', upload.single('image'), (req, res) => {
     try {
-        if (!req.file) {
-            return res.status(400).send('No file uploaded.');
+        const textInput = req.body.textInput; // <-- now reading textInput
+        let imagePath = '';
+
+        if (req.file) {
+            imagePath = path.join('/uploads', req.file.filename);
+        } else {
+            imagePath = '';
         }
 
-        const title = req.body.textInput;
-        const imagePath = path.join('/uploads', req.file.filename);
+        const newPost = `  <post>
+    <text>${textInput}</text>
+    <image>${imagePath}</image>
+  </post>\n`;
 
-        const xmlContent = `<post>
-  <text>${title}</text>
-  <image>${imagePath}</image>
-</post>`;
+        let xmlContent = '';
 
-        // Save or append to XML (for now overwrite, later can enhance)
-        fs.writeFileSync('data.xml', xmlContent);
+        if (fs.existsSync(xmlFilePath)) {
+            const currentContent = fs.readFileSync(xmlFilePath, 'utf-8');
 
-        res.send('Post created successfully!');
+            if (currentContent.includes('</posts>')) {
+                xmlContent = currentContent.replace('</posts>', newPost + '</posts>');
+            } else {
+                xmlContent = `<posts>\n${newPost}</posts>`;
+            }
+        } else {
+            xmlContent = `<posts>\n${newPost}</posts>`;
+        }
+
+        fs.writeFileSync(xmlFilePath, xmlContent);
+
+        res.send('Post created successfully (with or without image)!');
     } catch (error) {
         console.error('Error during post creation:', error);
         res.status(500).send('Server error');
