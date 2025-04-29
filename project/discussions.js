@@ -1,18 +1,6 @@
 // Function to fetch and display discussions for a specific subject
 async function loadSubjectDiscussions(subjectName) {
     try {
-
-        // Clear the current page content
-        /*document.body.innerHTML = '<div class="container mt-5"></div>';
-        const container = document.querySelector('.container');
-        
-        // Add back button
-        const backBtn = document.createElement('button');
-        backBtn.className = 'btn btn-secondary mb-3';
-        backBtn.textContent = 'Back to Subjects';
-        backBtn.onclick = () => window.location.reload();
-        container.appendChild(backBtn);*/
-
         // Fetch XML from backend
         const response = await fetch(`discussions`);
         const xmlText = await response.text();
@@ -29,8 +17,8 @@ async function loadSubjectDiscussions(subjectName) {
 
         // Get all topics for the subject
         const topics = subject.getElementsByTagName('topic');
-        
-        // Create topics table
+
+        // Create topics table HTML
         let topicsHtml = `
             <h2>${subjectName}</h2>
             <table class="table table-hover">
@@ -47,9 +35,9 @@ async function loadSubjectDiscussions(subjectName) {
             const discussions = topic.getElementsByTagName('discussion');
             const latestPost = discussions[discussions.length - 1];
             const latestUser = latestPost ? latestPost.getElementsByTagName('username')[0].textContent : 'No posts';
-            
+
             topicsHtml += `
-                <tr onclick="showDiscussions('${title}')">
+                <tr style="cursor:pointer;" onclick="showDiscussions('${title}', '${subjectName}')">
                     <td>${title}</td>
                     <td>${latestUser}</td>
                 </tr>`;
@@ -59,16 +47,27 @@ async function loadSubjectDiscussions(subjectName) {
                 </tbody>
             </table>`;
 
-        document.getElementById('topicsContainer').innerHTML = topicsHtml;
+        // Replace page content
+        document.body.innerHTML = '<div class="container mt-5" id="newContentContainer"></div>';
+        const container = document.getElementById('newContentContainer');
+
+        const backBtn = document.createElement('button');
+        backBtn.className = 'btn btn-success mb-3';
+        backBtn.textContent = 'Back to Subjects';
+        backBtn.onclick = () => location.reload();
+        container.appendChild(backBtn);
+
+        const contentDiv = document.createElement('div');
+        contentDiv.innerHTML = topicsHtml;
+        container.appendChild(contentDiv);
     } catch (error) {
         console.error('Error loading discussions:', error);
-        document.getElementById('topicsContainer').innerHTML = 
-            '<div class="alert alert-danger">Error loading discussions</div>';
+        document.body.innerHTML = '<div class="alert alert-danger m-5">Error loading discussions</div>';
     }
 }
 
 // Function to show discussions for a specific topic
-async function showDiscussions(topicTitle) {
+async function showDiscussions(topicTitle, subjectName) {
     try {
         const response = await fetch(`discussions`);
         const xmlText = await response.text();
@@ -93,15 +92,16 @@ async function showDiscussions(topicTitle) {
 
         // Create discussions table
         let discussionsHtml = `
+            <h3>${topicTitle}</h3>
             <table class="table">
                 <tbody>`;
 
-        discussions.forEach((discussion, index) => {
+        discussions.forEach((discussion) => {
             const timestamp = new Date(discussion.getElementsByTagName('timestamp')[0].textContent)
                 .toLocaleString();
             const username = discussion.getElementsByTagName('username')[0].textContent;
             const content = discussion.getElementsByTagName('content')[0].textContent;
-            const imageLocation = discussion.getElementsByTagName('imageLocation')[0].textContent;
+            const imageLocation = discussion.getElementsByTagName('imageLocation')[0]?.textContent || '';
 
             discussionsHtml += `
                 <tr>
@@ -110,7 +110,6 @@ async function showDiscussions(topicTitle) {
                         <small class="text-muted">${timestamp}</small>
                     </td>
                     <td>
-                        ${index === 0 ? `<h4>${topicTitle}</h4>` : ''}
                         <p>${content}</p>
                         ${imageLocation ? `<img src="${imageLocation}" class="img-fluid" alt="Discussion image">` : ''}
                     </td>
@@ -121,10 +120,21 @@ async function showDiscussions(topicTitle) {
                 </tbody>
             </table>`;
 
-        document.getElementById('discussionsContainer').innerHTML = discussionsHtml;
+        // Replace page content
+        document.body.innerHTML = '<div class="container mt-5" id="discussionsContainer"></div>';
+        const container = document.getElementById('discussionsContainer');
+
+        const backBtn = document.createElement('button');
+        backBtn.className = 'btn btn-success mb-3';
+        backBtn.textContent = 'Back to Topics';
+        backBtn.onclick = () => loadSubjectDiscussions(subjectName);
+        container.appendChild(backBtn);
+
+        const contentDiv = document.createElement('div');
+        contentDiv.innerHTML = discussionsHtml;
+        container.appendChild(contentDiv);
     } catch (error) {
         console.error('Error showing discussions:', error);
-        document.getElementById('discussionsContainer').innerHTML = 
-            '<div class="alert alert-danger">Error loading discussions</div>';
+        document.body.innerHTML = '<div class="alert alert-danger m-5">Error loading discussions</div>';
     }
 }
