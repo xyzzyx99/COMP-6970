@@ -142,6 +142,18 @@ app.get('/posts.xml', (req, res) => {
     res.sendFile(path.join(__dirname, 'posts.xml'));
 });
 
+app.get('/discussions', (req, res) => {
+    try {
+        const xmlPath = path.join(__dirname, 'discussions.xml');
+        const xmlData = fs.readFileSync(xmlPath, 'utf8');
+        res.header('Content-Type', 'application/xml');
+        res.send(xmlData);
+    } catch (error) {
+        console.error('Error reading XML file:', error);
+        res.status(500).send('Error reading discussions data');
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });

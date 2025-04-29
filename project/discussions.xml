@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<courseDiscussions>
+    <subject name="Programming Fundamentals">
+        <topic title="Variables and Data Types">
+            <thread>
+                <discussion>
+                    <timestamp>2023-10-15T09:30:00</timestamp>
+                    <username>john_doe</username>
+                    <content>Can someone explain the difference between int and float?</content>
+                    <imageLocation>/images/int_float_example.png</imageLocation>
+                </discussion>
+                <discussion>
+                    <timestamp>2023-10-15T09:45:00</timestamp>
+                    <username>prof_smith</username>
+                    <content>Integers are whole numbers, while floats can have decimal points. Here's an example...</content>
+                    <imageLocation>/images/number_types.png</imageLocation>
+                </discussion>
+            </thread>
+        </topic>
+        <topic title="Control Structures">
+            <thread>
+                <discussion>
+                    <timestamp>2023-10-16T14:20:00</timestamp>
+                    <username>alice_student</username>
+                    <content>I'm having trouble understanding while loops vs for loops</content>
+                    <imageLocation>/images/loop_question.png</imageLocation>
+                </discussion>
+            </thread>
+        </topic>
+    </subject>
+    
+    <subject name="Web Development">
+        <topic title="HTML Basics">
+            <thread>
+                <discussion>
+                    <timestamp>2023-10-17T10:15:00</timestamp>
+                    <username>web_learner</username>
+                    <content>What's the semantic difference between &lt;div&gt; and &lt;section&gt;?</content>
+                    <imageLocation>/images/html_elements.png</imageLocation>
+                </discussion>
+                <discussion>
+                    <timestamp>2023-10-17T11:00:00</timestamp>
+                    <username>html_expert</username>
+                    <content>The &lt;section&gt; element represents a thematic grouping of content...</content>
+                    <imageLocation>/images/semantic_html.png</imageLocation>
+                </discussion>
+            </thread>
+        </topic>
+    </subject>
+</courseDiscussions>
