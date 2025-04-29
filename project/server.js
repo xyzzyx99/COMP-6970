@@ -138,6 +138,10 @@ app.get('/subjects.xml', (req, res) => {
     res.sendFile(path.join(__dirname, 'subjects.xml'));
 });
 
+app.get('/posts.xml', (req, res) => {
+    res.sendFile(path.join(__dirname, 'posts.xml'));
+});
+
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });

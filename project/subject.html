@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title id="pageTitle">Loading...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        #postsList {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .post {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        .post img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="subjectTitle">Loading Subject...</h1>
+
+<div id="postsList">
+    Loading posts...
+</div>
+
+<script>
+    // Get subject name from URL
+    const params = new URLSearchParams(window.location.search);
+    const subjectName = params.get('name') || 'Unknown';
+
+    document.title = subjectName; // Set page title
+    document.getElementById('subjectTitle').innerText = subjectName;
+
+    // Fetch and display posts
+    fetch('/posts.xml')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to load posts.');
+            }
+            return response.text();
+        })
+        .then(xmlString => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+
+            const posts = xmlDoc.getElementsByTagName('post');
+
+            let postsHTML = '';
+
+            for (let i = 0; i < posts.length; i++) {
+                const text = posts[i].getElementsByTagName('text')[0]?.textContent || '(No Text)';
+                const image = posts[i].getElementsByTagName('image')[0]?.textContent || '';
+
+                postsHTML += `<div class="post">
+        <div>${text}</div>`;
+                if (image.trim() !== '') {
+                    postsHTML += `<img src="${image}" alt="Post Image">`;
+                }
+                postsHTML += `</div>`;
+            }
+
+            document.getElementById('postsList').innerHTML = postsHTML;
+        })
+        .catch(error => {
+            console.error('Error loading posts:', error);
+            document.getElementById('postsList').innerText = 'Failed to load posts.';
+        });
+</script>
+
+</body>
+</html>
