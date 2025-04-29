@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Group Bulletin Board System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Logout button - green now */
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #10b981; /* green */
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #059669; /* darker green on hover */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        #subjectsList {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #e0e7ff;
+            margin: 10px 0;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 18px;
+            color: #1e3a8a;
+            transition: background-color 0.3s;
+            cursor: default;
+        }
+
+        li:hover {
+            background-color: #c7d2fe;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Logout button -->
+<button class="logout-button" onclick="logout()">Logout</button>
+
+<h1>Study Group Bulletin Board System</h1>
+
+<div id="subjectsList">
+    Loading subjects...
+</div>
+
+<script>
+    // Handle logout click
+    function logout() {
+        alert('Logging out...');
+        window.location.href = '/index.html'; // You can redirect wherever you want
+    }
+
+    // Fetch and display subjects
+    fetch('/subjects.xml')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(xmlString => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+            const subjects = xmlDoc.getElementsByTagName('subject');
+
+            let listHTML = '<ul>';
+            for (let i = 0; i < subjects.length; i++) {
+                listHTML += `<li>${subjects[i].textContent}</li>`;
+            }
+            listHTML += '</ul>';
+
+            document.getElementById('subjectsList').innerHTML = listHTML;
+        })
+        .catch(error => {
+            console.error('Error fetching subjects:', error);
+            document.getElementById('subjectsList').innerText = 'Failed to load subjects.';
+        });
+</script>
+
+</body>
+</html>

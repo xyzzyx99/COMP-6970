@@ -134,7 +134,9 @@ app.get('/userRead', (req, res) => {
     res.sendFile(path.join(__dirname, 'user_data.xml'));
 });
 
-
+app.get('/subjects.xml', (req, res) => {
+    res.sendFile(path.join(__dirname, 'subjects.xml'));
+});
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
