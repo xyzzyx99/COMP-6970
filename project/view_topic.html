@@ -13,6 +13,13 @@
 <script src="discussions.js"></script>
 
 <script>
+
+    const access = localStorage.getItem('accessibility') === 'true';
+
+    if (access) {
+        document.body.classList.add('large-font');
+    }
+
     const params = new URLSearchParams(window.location.search);
     const subjectName = params.get('subjectName');
     const topicTitle = params.get('topicTitle');
