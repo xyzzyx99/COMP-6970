@@ -51,12 +51,34 @@ async function loadSubjectDiscussions(subjectName) {
         document.body.innerHTML = '<div class="container mt-5" id="newContentContainer"></div>';
         const container = document.getElementById('newContentContainer');
 
+        // Create buttons
         const backBtn = document.createElement('button');
-        backBtn.className = 'btn btn-success mb-3';
+        backBtn.className = 'btn btn-success';
         backBtn.textContent = 'Back to Subjects';
         backBtn.onclick = () => location.reload();
-        container.appendChild(backBtn);
 
+        const addTopicBtn = document.createElement('button');
+        addTopicBtn.className = 'btn btn-success';
+        addTopicBtn.textContent = 'Add New Topic';
+        addTopicBtn.onclick = () => {
+            alert(`Functionality to add a new topic under "${subjectName}" goes here.`);
+        };
+
+        // Put buttons in the same row
+        const buttonRow = document.createElement('div');
+        buttonRow.className = 'd-flex justify-content-between mb-3';
+
+        const leftBtnWrapper = document.createElement('div');
+        leftBtnWrapper.appendChild(backBtn);
+
+        const rightBtnWrapper = document.createElement('div');
+        rightBtnWrapper.appendChild(addTopicBtn);
+
+        buttonRow.appendChild(leftBtnWrapper);
+        buttonRow.appendChild(rightBtnWrapper);
+        container.appendChild(buttonRow);
+
+        // Add topic content
         const contentDiv = document.createElement('div');
         contentDiv.innerHTML = topicsHtml;
         container.appendChild(contentDiv);
@@ -124,12 +146,34 @@ async function showDiscussions(topicTitle, subjectName) {
         document.body.innerHTML = '<div class="container mt-5" id="discussionsContainer"></div>';
         const container = document.getElementById('discussionsContainer');
 
+        // Create buttons
         const backBtn = document.createElement('button');
-        backBtn.className = 'btn btn-success mb-3';
+        backBtn.className = 'btn btn-success';
         backBtn.textContent = 'Back to Topics';
         backBtn.onclick = () => loadSubjectDiscussions(subjectName);
-        container.appendChild(backBtn);
 
+        const replyBtn = document.createElement('button');
+        replyBtn.className = 'btn btn-success';
+        replyBtn.textContent = 'Reply to Topic';
+        replyBtn.onclick = () => {
+            alert(`Reply form for topic "${topicTitle}" under subject "${subjectName}" goes here.`);
+        };
+
+        // Put buttons in the same row
+        const buttonRow = document.createElement('div');
+        buttonRow.className = 'd-flex justify-content-between mb-3';
+
+        const leftBtnWrapper = document.createElement('div');
+        leftBtnWrapper.appendChild(backBtn);
+
+        const rightBtnWrapper = document.createElement('div');
+        rightBtnWrapper.appendChild(replyBtn);
+
+        buttonRow.appendChild(leftBtnWrapper);
+        buttonRow.appendChild(rightBtnWrapper);
+        container.appendChild(buttonRow);
+
+        // Add discussion content
         const contentDiv = document.createElement('div');
         contentDiv.innerHTML = discussionsHtml;
         container.appendChild(contentDiv);
