@@ -19,16 +19,18 @@
         <h1>Course Discussions</h1>
         
         <!-- Course links -->
-        <div class="list-group mb-4">
-            <a href="#" class="list-group-item list-group-item-action" onclick="loadSubjectDiscussions('Programming Fundamentals')">
-                Programming Fundamentals
-            </a>
-            <a href="#" class="list-group-item list-group-item-action" onclick="loadSubjectDiscussions('Web Development')">
-                Web Development
-            </a>
-        </div>
+        <!--  <div class="list-group mb-4">
+             <a href="#" class="list-group-item list-group-item-action" onclick="loadSubjectDiscussions('Programming Fundamentals')">
+                 Programming Fundamentals
+             </a>
+             <a href="#" class="list-group-item list-group-item-action" onclick="loadSubjectDiscussions('Web Development')">
+                 Web Development
+             </a>
+         </div> -->
 
-        <!-- Topics container -->
+         <div id="subjectList" class="list-group mb-4"></div>
+
+         <!-- Topics container -->
         <div id="topicsContainer"></div>
 
         <!-- Discussions container -->
@@ -36,5 +38,34 @@
     </div>
 
     <script src="discussions.js"></script>
+
+    <script>
+        async function loadSubjects() {
+            try {
+                const response = await fetch('/subjects');
+                const xmlText = await response.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+
+                const subjects = xmlDoc.getElementsByTagName("subject");
+                const container = document.getElementById("subjectList");
+
+                for (let i = 0; i < subjects.length; i++) {
+                    const subjectName = subjects[i].textContent;
+                    const link = document.createElement("a");
+                    link.href = "#";
+                    link.className = "list-group-item list-group-item-action";
+                    link.textContent = subjectName;
+                    link.onclick = () => loadSubjectDiscussions(subjectName);
+                    container.appendChild(link);
+                }
+            } catch (err) {
+                console.error("Failed to load subjects:", err);
+            }
+        }
+
+        loadSubjects();
+    </script>
+
 </body>
 </html>

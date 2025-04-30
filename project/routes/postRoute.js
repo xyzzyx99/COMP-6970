@@ -47,17 +47,40 @@ router.post('/createPost', upload.single('image'), async (req, res) => {
 
         //if (imageLocation && description && description.trim() !== '') {
         if (imageLocation && description?.trim()) {
-                discussion.description = description.trim();
-            }
+            discussion.description = description.trim();
+        }
         //}
 
         let subjects = xmlObj.courseDiscussions.subject;
         if (!Array.isArray(subjects)) subjects = [subjects];
 
-        const subject = subjects.find(s => s.$.name === subjectName);
-        if (!subject) {
+        /*  // Ensure courseDiscussions exists
+          if (!xmlObj.courseDiscussions) {
+              xmlObj.courseDiscussions = { subject: [] };
+          }
+
+  // Normalize subject array
+          let subjects = xmlObj.courseDiscussions.subject;
+          if (!subjects) {
+              subjects = [];
+              xmlObj.courseDiscussions.subject = subjects;
+          } else if (!Array.isArray(subjects)) {
+              subjects = [subjects];
+              xmlObj.courseDiscussions.subject = subjects;
+          }
+          */
+
+        //const subject = subjects.find(s => s.$.name === subjectName);
+        /*if (!subject) {
             throw new Error(`Subject "${subjectName}" not found.`);
+        }*/
+
+        let subject = subjects.find(s => s.$.name === subjectName);
+        if (!subject) {
+            subject = { $: { name: subjectName }, topic: [] };
+            subjects.push(subject);
         }
+
 
         // Normalize topic list
         if (!subject.topic) {
@@ -101,8 +124,8 @@ router.post('/createPost', upload.single('image'), async (req, res) => {
         res.redirect(`/view_topic.html?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(title)}`);
 
     } catch (error) {
-        console.error('Error creating post:', error);
-        res.status(500).send('Error creating post');
+        console.error('Error creating post postRoute:', error);
+        res.status(500).send('Error creating post in postRoute');
     }
 });
 

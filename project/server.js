@@ -249,6 +249,17 @@ app.get('/subjects.xml', (req, res) => {
     res.sendFile(path.join(__dirname, 'subjects.xml'));
 });
 
+app.get('/subjects', (req, res) => {
+    const filePath = path.join(__dirname, 'subjects.xml');
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) {
+            console.error('Error reading subjects.xml:', err);
+            return res.status(500).send('Failed to load subjects');
+        }
+        res.type('application/xml').send(data);
+    });
+});
+
 app.get('/posts.xml', (req, res) => {
     res.sendFile(path.join(__dirname, 'posts.xml'));
 });

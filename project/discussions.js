@@ -11,16 +11,64 @@ async function loadSubjectDiscussions(subjectName) {
         const subject = Array.from(xmlDoc.getElementsByTagName('subject'))
             .find(sub => sub.getAttribute('name') === subjectName);
 
+        // ✅ Prepare the container
+        document.body.innerHTML = '<div class="container mt-5" id="newContentContainer"></div>';
+        const container = document.getElementById('newContentContainer');
+
+        // ✅ Create buttons
+        const backBtn = document.createElement('button');
+        backBtn.className = 'btn btn-success';
+        backBtn.textContent = 'Back to Subjects';
+        backBtn.onclick = () => {
+            window.location.href = 'subjects.html';
+        };
+
+        const addTopicBtn = document.createElement('button');
+        addTopicBtn.className = 'btn btn-success';
+        addTopicBtn.textContent = 'Add New Topic';
+        addTopicBtn.onclick = () => {
+            window.location.href = `new_topic.html?subjectName=${subjectName}`;
+        };
+
+        const buttonRow = document.createElement('div');
+        buttonRow.className = 'd-flex justify-content-between mb-3';
+
+        const leftBtnWrapper = document.createElement('div');
+        leftBtnWrapper.appendChild(backBtn);
+        const rightBtnWrapper = document.createElement('div');
+        rightBtnWrapper.appendChild(addTopicBtn);
+
+        buttonRow.appendChild(leftBtnWrapper);
+        buttonRow.appendChild(rightBtnWrapper);
+        container.appendChild(buttonRow);
+
+        // ✅ Show subject header
+        const header = document.createElement('h2');
+        header.textContent = subjectName;
+        container.appendChild(header);
+
         if (!subject) {
-            throw new Error('Subject not found');
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'alert alert-warning mt-3';
+            errorMsg.textContent = 'Subject not found.';
+            container.appendChild(errorMsg);
+            return;
         }
 
         // Get all topics for the subject
         const topics = subject.getElementsByTagName('topic');
 
-        // Create topics table HTML
+        // If no topics, show message instead of throwing
+        if (!topics.length) {
+            const noTopics = document.createElement('div');
+            noTopics.className = 'alert alert-info mt-3';
+            noTopics.textContent = 'No topics found under this subject.';
+            container.appendChild(noTopics);
+            return;
+        }
+
+        // ✅ Build topics table
         let topicsHtml = `
-            <h2>${subjectName}</h2>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -43,58 +91,11 @@ async function loadSubjectDiscussions(subjectName) {
                 </tr>`;
         });
 
-        topicsHtml += `
-                </tbody>
-            </table>`;
+        topicsHtml += `</tbody></table>`;
 
-        // Replace page content
-        document.body.innerHTML = '<div class="container mt-5" id="newContentContainer"></div>';
-        const container = document.getElementById('newContentContainer');
-
-        // Create buttons
-        const backBtn = document.createElement('button');
-        backBtn.className = 'btn btn-success';
-        backBtn.textContent = 'Back to Subjects';
-        //backBtn.onclick = () => location.reload();
-        backBtn.onclick = () => {
-            //window.location.href = `new_topic.html?topicTitle=${topicTitle}`;
-            //window.location.href = `view_topic.html?subjectName=${subjectName}&topicTitle=${topicTitle}`;
-            //window.location.href = `discussions.html?subjectName=${encodeURIComponent(subjectName)}`;
-            //window.location.href = `topics_list.html?subjectName=${encodeURIComponent(subjectName)}`;
-            window.location.href = 'subjects.html';
-
-//            alert(`Functionality to add a new topic under "${subjectName}" goes here.`);
-        };
-//            loadSubjectDiscussions(subjectName); // location.reload();
-
-        const addTopicBtn = document.createElement('button');
-        addTopicBtn.className = 'btn btn-success';
-        addTopicBtn.textContent = 'Add New Topic';
-        addTopicBtn.onclick = () => {
-            //window.location.href = `new_topic.html?topicTitle=${topicTitle}`;
-            window.location.href = `new_topic.html?subjectName=${subjectName}`;
-
-//            alert(`Functionality to add a new topic under "${subjectName}" goes here.`);
-        };
-
-        // Put buttons in the same row
-        const buttonRow = document.createElement('div');
-        buttonRow.className = 'd-flex justify-content-between mb-3';
-
-        const leftBtnWrapper = document.createElement('div');
-        leftBtnWrapper.appendChild(backBtn);
-
-        const rightBtnWrapper = document.createElement('div');
-        rightBtnWrapper.appendChild(addTopicBtn);
-
-        buttonRow.appendChild(leftBtnWrapper);
-        buttonRow.appendChild(rightBtnWrapper);
-        container.appendChild(buttonRow);
-
-        // Add topic content
-        const contentDiv = document.createElement('div');
-        contentDiv.innerHTML = topicsHtml;
-        container.appendChild(contentDiv);
+        const tableWrapper = document.createElement('div');
+        tableWrapper.innerHTML = topicsHtml;
+        container.appendChild(tableWrapper);
     } catch (error) {
         console.error('Error loading discussions:', error);
         document.body.innerHTML = '<div class="alert alert-danger m-5">Error loading discussions</div>';
