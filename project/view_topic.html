@@ -75,10 +75,11 @@
             const backBtn = document.createElement('button');
             backBtn.className = 'btn btn-success';
             backBtn.textContent = 'Back to Topics';
-            /*backBtn.onclick = () => {
-                window.location.href = `subjects.html?subjectName=${encodeURIComponent(subjectName)}`;
-            };*/
-            backBtn.onclick = () => loadSubjectDiscussions(subjectName);
+            backBtn.onclick = () => {
+                //window.location.href = `subjects.html?subjectName=${encodeURIComponent(subjectName)}`;
+                window.location.href = 'topics_list.html?subjectName=' + encodeURIComponent(subjectName);
+            };
+            //backBtn.onclick = () => loadSubjectDiscussions(subjectName);
 
             const replyBtn = document.createElement('button');
             replyBtn.className = 'btn btn-success';

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topics List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5" id="topicsContainer">
+    <!-- Buttons at the top -->
+    <div class="d-flex justify-content-between mb-3">
+        <div>
+            <button class="btn btn-success" id="backToSubjectsBtn">Back to Subjects</button>
+        </div>
+        <div>
+            <button class="btn btn-success" id="addNewTopicBtn">Add New Topic</button>
+        </div>
+    </div>
+
+    <!-- Subject name -->
+    <h2 id="subjectHeader">Loading...</h2>
+
+    <!-- Topics Table -->
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Topic</th>
+            <th>Latest Post By</th>
+        </tr>
+        </thead>
+        <tbody id="topicsTableBody">
+        <!-- Dynamic topics will go here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const subjectName = params.get('subjectName');
+    document.getElementById('subjectHeader').textContent = subjectName;
+
+    async function loadTopics() {
+        try {
+            // Fetch XML from the backend
+            const response = await fetch('discussions');
+            const xmlText = await response.text();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+            // Find the subject by name
+            const subjects = Array.from(xmlDoc.getElementsByTagName('subject'));
+            const subject = subjects.find(s => s.getAttribute('name') === subjectName);
+            if (!subject) {
+                throw new Error('Subject not found');
+            }
+
+            // Get all topics for the subject
+            const topics = subject.getElementsByTagName('topic');
+            const topicsTableBody = document.getElementById('topicsTableBody');
+
+            // Build table rows dynamically
+            Array.from(topics).forEach(topic => {
+                const title = topic.getAttribute('title');
+                const discussions = topic.getElementsByTagName('discussion');
+                const latestUser = discussions.length ? discussions[discussions.length - 1].getElementsByTagName('username')[0].textContent : 'No posts';
+
+                const row = document.createElement('tr');
+                row.style.cursor = 'pointer';
+                row.innerHTML = `
+            <td onclick="showTopic('${title}')">${title}</td>
+            <td>${latestUser}</td>
+          `;
+                topicsTableBody.appendChild(row);
+            });
+
+        } catch (error) {
+            console.error('Error loading topics:', error);
+            document.getElementById('topicsContainer').innerHTML = '<div class="alert alert-danger">Error loading topics</div>';
+        }
+    }
+
+    // Navigate to subject's topic page
+    document.getElementById('backToSubjectsBtn').onclick = () => {
+        window.location.href = 'subjects.html';  // Adjust this if your subjects page has a different name
+    };
+
+    // Navigate to Add New Topic page
+    document.getElementById('addNewTopicBtn').onclick = () => {
+        window.location.href = `new_topic.html?subjectName=${encodeURIComponent(subjectName)}`;
+    };
+
+    // Display individual topic discussions
+    function showTopic(topicTitle) {
+        window.location.href = `view_topic.html?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}`;
+    }
+
+    // Load topics when the page is ready
+    loadTopics();
+</script>
+
+</body>
+</html>

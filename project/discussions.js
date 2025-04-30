@@ -5,7 +5,7 @@ async function loadSubjectDiscussions(subjectName) {
         const response = await fetch(`discussions`);
         const xmlText = await response.text();
         const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
 
         // Find the subject
         const subject = Array.from(xmlDoc.getElementsByTagName('subject'))
@@ -55,7 +55,16 @@ async function loadSubjectDiscussions(subjectName) {
         const backBtn = document.createElement('button');
         backBtn.className = 'btn btn-success';
         backBtn.textContent = 'Back to Subjects';
-        backBtn.onclick = () => location.reload();
+        //backBtn.onclick = () => location.reload();
+        backBtn.onclick = () => {
+            //window.location.href = `new_topic.html?topicTitle=${topicTitle}`;
+            //window.location.href = `view_topic.html?subjectName=${subjectName}&topicTitle=${topicTitle}`;
+            //window.location.href = `discussions.html?subjectName=${encodeURIComponent(subjectName)}`;
+            window.location.href = `topics_list.html?subjectName=${encodeURIComponent(subjectName)}`;
+
+//            alert(`Functionality to add a new topic under "${subjectName}" goes here.`);
+        };
+//            loadSubjectDiscussions(subjectName); // location.reload();
 
         const addTopicBtn = document.createElement('button');
         addTopicBtn.className = 'btn btn-success';
@@ -97,7 +106,7 @@ async function showDiscussions(topicTitle, subjectName) {
         const response = await fetch(`discussions`);
         const xmlText = await response.text();
         const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
 
         // Find the topic
         const topic = Array.from(xmlDoc.getElementsByTagName('topic'))

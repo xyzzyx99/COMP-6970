@@ -81,7 +81,10 @@ router.post('/createPost', upload.single('image'), async (req, res) => {
         const newXml = builder.buildObject(xmlObj);
         fs.writeFileSync(xmlFilePath, newXml, 'utf-8');
 
-        res.redirect(`/new_topic.html?subjectName=${encodeURIComponent(subjectName)}`);
+        //res.redirect(`/new_topic.html?subjectName=${encodeURIComponent(subjectName)}`);
+        //res.redirect(`/view_topic.html?subjectName=${encodeURIComponent(subjectName)}`);
+        res.redirect(`/view_topic.html?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(title)}`);
+
     } catch (error) {
         console.error('Error creating post:', error);
         res.status(500).send('Error creating post');
@@ -130,6 +133,7 @@ router.post('/replyPost', upload.single('image'), async (req, res) => {
         fs.writeFileSync(xmlFilePath, newXml, 'utf-8');
 
         res.redirect(`/view_topic.html?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}`);
+        //res.redirect(`/topics_list.html?subjectName=${encodeURIComponent(subjectName)}`);
         //const returnTo = req.query.returnTo || `/new_topic.html?subjectName=${encodeURIComponent(subjectName)}`;
         // const returnTo = req.query.returnTo || showDiscussions(topicTitle, subjectName)
         //res.redirect(returnTo);
