@@ -31,21 +31,79 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, '.')));
 
+//const multer = require('multer');
+//const upload = multer();
+
+//const xmlPath = path.join(__dirname, 'user_data.xml');
+
 // Handle Form 1
+const parser = new xml2js.Parser({ explicitArray: false });
+
 app.post('/userCreation', (req, res) => {
     const { username, password, accessibility } = req.body;
-    const builder = new xml2js.Builder();
-    const obj = { user: { username, password, accessibility } };
-    const xml = builder.buildObject(obj);
+    if (!username || !password) {
+        return res.status(400).send('Username and password required.');
+    }
 
-    fs.writeFile('user_data.xml', xml, (err) => {
-        if (err) return res.status(500).send('Error saving Form 1');
-        res.send('Form 1 received!');
+    const xmlPath = path.join(__dirname, 'user_data.xml');
+    const newUser = {
+        username,
+        password,
+        accessibility,
+        admin: "0"
+    };
+
+    fs.readFile(xmlPath, 'utf-8', (err, data) => {
+        let usersXml = { Users: { user: [] } };
+
+        if (!err && data.trim()) {
+            parser.parseString(data, (parseErr, result) => {
+                if (parseErr) {
+                    console.error('Parse error:', parseErr);
+                    return res.status(500).send('Failed to parse user XML.');
+                }
+
+                let users = result.Users?.user || [];
+
+                // Normalize to array if single user
+                if (!Array.isArray(users)) users = [users];
+
+                // Check for duplicate
+                if (users.some(u => u.username === username)) {
+                    return res.status(409).send('User exists!');
+                }
+
+                users.push(newUser);
+                const builder = new xml2js.Builder();
+                const updatedXml = builder.buildObject({ Users: { user: users } });
+
+                fs.writeFile(xmlPath, updatedXml, (writeErr) => {
+                    if (writeErr) {
+                        console.error('Write error:', writeErr);
+                        return res.status(500).send('Failed to save user.');
+                    }
+                    res.send('User registered successfully!');
+                });
+            });
+        } else {
+            // File missing or empty: start fresh
+            const builder = new xml2js.Builder();
+            const updatedXml = builder.buildObject({ Users: { user: [newUser] } });
+
+            fs.writeFile(xmlPath, updatedXml, (writeErr) => {
+                if (writeErr) {
+                    console.error('Write error:', writeErr);
+                    return res.status(500).send('Failed to create user.');
+                }
+                res.send('User registered successfully!');
+            });
+        }
     });
 });
 
-app.use(express.text({ type: 'application/xml' }));
 const multer = require('multer');
+
+app.use(express.text({ type: 'application/xml' }));
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

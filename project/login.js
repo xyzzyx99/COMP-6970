@@ -34,7 +34,8 @@ document.getElementById('login').addEventListener('submit', async (e) => {
     const match = await checkLogin(usernameInput, passwordInput);
 
     if (match) {
-        window.location.href = 'success.html';
+        //window.location.href = 'success.html';
+        window.location.href = 'subjects.html';
         //resultDiv.innerHTML = `<p style="color: green;">Login successful!</p>`;
     } else {
         window.location.href = 'unsuccessful.html';
