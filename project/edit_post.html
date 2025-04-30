@@ -49,25 +49,36 @@
         const topicTitle = params.get("topicTitle");
         const returnTo = params.get("returnTo");
 
+        const form = document.getElementById("contentForm");
+
         if (subjectName && topicTitle) {
-            const form = document.getElementById("contentForm");
             let actionUrl = `/replyPost?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}`;
             if (returnTo) actionUrl += `&returnTo=${encodeURIComponent(returnTo)}`;
             form.action = actionUrl;
 
             // Set page heading
             document.querySelector("h1").textContent = `Reply to: ${topicTitle}`;
-
-            // Conditional description validation
-            form.addEventListener("submit", (e) => {
-                const image = document.getElementById("imageInput").files[0];
-                const description = document.getElementById("descriptionInput").value.trim();
-                if (image && description === "") {
-                    e.preventDefault();
-                    alert("Please provide a description for the uploaded image.");
-                }
-            });
         }
+
+        // Add username from localStorage as a hidden field before submit
+        form.addEventListener("submit", (e) => {
+            const username = localStorage.getItem("username");
+            if (username) {
+                const hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "username";
+                hiddenInput.value = username;
+                form.appendChild(hiddenInput);
+            }
+
+            // Conditional validation: description required only if image is selected
+            const image = document.getElementById("imageInput").files[0];
+            const description = document.getElementById("descriptionInput").value.trim();
+            if (image && description === "") {
+                e.preventDefault();
+                alert("Please provide a description for the uploaded image.");
+            }
+        });
     });
 </script>
 

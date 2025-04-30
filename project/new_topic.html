@@ -67,9 +67,19 @@
             document.querySelector("h1").textContent += ` – ${subject}`;
         }
 
-        // Conditional validation: description required only if image is selected
         const form = document.getElementById("contentForm");
         form.addEventListener("submit", (e) => {
+            // Add username from localStorage as a hidden field
+            const username = localStorage.getItem("username");
+            if (username) {
+                const hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "username";
+                hiddenInput.value = username;
+                form.appendChild(hiddenInput);
+            }
+
+            // Conditional validation: description required only if image is selected
             const image = document.getElementById("imageInput").files[0];
             const description = document.getElementById("descriptionInput").value.trim();
             if (image && description === "") {

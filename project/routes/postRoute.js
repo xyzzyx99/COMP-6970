@@ -21,7 +21,7 @@ const xmlFilePath = path.join(__dirname, '..', 'discussions.xml'); // still post
 router.post('/createPost', upload.single('image'), async (req, res) => {
     try {
         //const { title, textInput } = req.body;
-        const { title, textInput, description } = req.body;
+        const { title, textInput, description, username } = req.body;
 
         const subjectName = req.query.subjectName;
         const imageLocation = req.file ? `/uploads/${req.file.filename}` : '';
@@ -40,7 +40,8 @@ router.post('/createPost', upload.single('image'), async (req, res) => {
 
         const discussion = {
             timestamp: new Date().toISOString(),
-            username: 'anonymous_user',
+//            username: 'anonymous_user',
+            username: username,
             content: textInput,
             imageLocation: imageLocation
         };
@@ -132,7 +133,7 @@ router.post('/createPost', upload.single('image'), async (req, res) => {
 router.post('/replyPost', upload.single('image'), async (req, res) => {
     try {
 //        const { textInput } = req.body;
-        const { textInput, description } = req.body;
+        const { textInput, description, username } = req.body;
         //const { title, textInput, description } = req.body;
 
         const subjectName = req.query.subjectName;
@@ -153,7 +154,8 @@ router.post('/replyPost', upload.single('image'), async (req, res) => {
 
         const discussion = {
             timestamp: new Date().toISOString(),
-            username: 'anonymous_user',
+//            username: 'anonymous_user',
+            username: username,
             content: textInput,
             imageLocation: imageLocation
         };
