@@ -50,7 +50,7 @@ async function loadSubjectDiscussions(subjectName) {
         if (!subject) {
             const errorMsg = document.createElement('div');
             errorMsg.className = 'alert alert-warning mt-3';
-            errorMsg.textContent = 'Subject not found.';
+            errorMsg.textContent = 'No discussions yet.'; // Subject not found.';
             container.appendChild(errorMsg);
             return;
         }
