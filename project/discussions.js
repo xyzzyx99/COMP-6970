@@ -60,7 +60,8 @@ async function loadSubjectDiscussions(subjectName) {
             //window.location.href = `new_topic.html?topicTitle=${topicTitle}`;
             //window.location.href = `view_topic.html?subjectName=${subjectName}&topicTitle=${topicTitle}`;
             //window.location.href = `discussions.html?subjectName=${encodeURIComponent(subjectName)}`;
-            window.location.href = `topics_list.html?subjectName=${encodeURIComponent(subjectName)}`;
+            //window.location.href = `topics_list.html?subjectName=${encodeURIComponent(subjectName)}`;
+            window.location.href = 'subjects.html';
 
 //            alert(`Functionality to add a new topic under "${subjectName}" goes here.`);
         };
