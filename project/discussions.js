@@ -61,7 +61,10 @@ async function loadSubjectDiscussions(subjectName) {
         addTopicBtn.className = 'btn btn-success';
         addTopicBtn.textContent = 'Add New Topic';
         addTopicBtn.onclick = () => {
-            alert(`Functionality to add a new topic under "${subjectName}" goes here.`);
+            //window.location.href = `new_topic.html?topicTitle=${topicTitle}`;
+            window.location.href = `new_topic.html?subjectName=${subjectName}`;
+
+//            alert(`Functionality to add a new topic under "${subjectName}" goes here.`);
         };
 
         // Put buttons in the same row
@@ -156,7 +159,10 @@ async function showDiscussions(topicTitle, subjectName) {
         replyBtn.className = 'btn btn-success';
         replyBtn.textContent = 'Reply to Topic';
         replyBtn.onclick = () => {
-            alert(`Reply form for topic "${topicTitle}" under subject "${subjectName}" goes here.`);
+//            window.location.href = `edit_post.html?topicTitle=${topicTitle}&returnTo=` + encodeURIComponent(window.location.pathname);
+            window.location.href = `edit_post.html?topicTitle=${topicTitle}`;
+
+            //alert(`Reply form for topic "${topicTitle}" under subject "${subjectName}" goes here.`);
         };
 
         // Put buttons in the same row
@@ -182,3 +188,8 @@ async function showDiscussions(topicTitle, subjectName) {
         document.body.innerHTML = '<div class="alert alert-danger m-5">Error loading discussions</div>';
     }
 }
+
+/*function replyToForm() {
+    //const userId = 42; // example parameter
+    window.location.href = `edit_post.html?$topicTitle=${topicTitle}`;
+}*/
