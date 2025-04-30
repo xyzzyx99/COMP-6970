@@ -276,6 +276,33 @@ app.get('/discussions', (req, res) => {
     }
 });
 
+app.get('/userAccessibility', (req, res) => {
+    const username = req.query.username;
+    const xmlPath = path.join(__dirname, 'user_data.xml');
+
+    fs.readFile(xmlPath, 'utf-8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Unable to read user data.');
+        }
+
+        const parser = new xml2js.Parser({ explicitArray: false });
+        parser.parseString(data, (parseErr, result) => {
+            if (parseErr) {
+                return res.status(500).send('Failed to parse user data.');
+            }
+
+            let users = result.Users.user || [];
+            if (!Array.isArray(users)) users = [users];
+
+            const user = users.find(u => u.username === username);
+            if (!user) return res.status(404).send('User not found');
+
+            res.send({ accessibility: user.accessibility || 'off' });
+        });
+    });
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });

@@ -1,5 +1,18 @@
 const form = document.getElementById('registration');
 
+document.getElementById('accessibility').addEventListener('change', function() {
+    if (this.checked) {
+        console.log('Accessibility is ON');
+        //localStorage.setItem('accessibility', 'true');
+        document.body.classList.add('large-font');
+    } else {
+        console.log('Accessibility is OFF');
+       // localStorage.setItem('accessibility', 'false');
+        document.body.classList.remove('large-font');
+    }
+});
+
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -10,7 +23,7 @@ form.addEventListener('submit', async (e) => {
     const accessibility = formData.get('accessibility') ? 'on' : 'off';
 
     if (password !== confirm_password) {
-        alert("Passwords don't match");
+        alert('Passwords don\'t match');
         return;
     }
 

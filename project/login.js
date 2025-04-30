@@ -1,3 +1,5 @@
+document.body.classList.add('large-font');
+
 async function loadUsers() {
     const response = await fetch('/userRead');
     const xmlText = await response.text();
@@ -35,6 +37,33 @@ document.getElementById('login').addEventListener('submit', async (e) => {
 
     if (match) {
         //window.location.href = 'success.html';
+
+        localStorage.setItem('username', usernameInput);
+
+        const username = localStorage.getItem('username');
+        if (!username) return;
+
+        try {
+            const response = await fetch(`/userAccessibility?username=${encodeURIComponent(username)}`);
+            const data = await response.json();
+
+            let need_accessibility = 'false';
+
+            if (data.accessibility === 'on') {
+                document.body.classList.add('large-font');
+
+                need_accessibility = 'true';
+
+            }
+
+            localStorage.setItem('accessibility', need_accessibility) ;
+
+        } catch (err) {
+            console.error('Failed to load accessibility setting:', err);
+        }
+
+        //const accessibility = localStorage.getItem('username');
+
         window.location.href = 'subjects.html';
         //resultDiv.innerHTML = `<p style="color: green;">Login successful!</p>`;
     } else {

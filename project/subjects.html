@@ -13,6 +13,9 @@
             display: none;
         }
     </style>
+
+    <link rel="stylesheet" href="accessibility.css">
+
 </head>
 <body>
     <div class="container mt-5">
@@ -40,6 +43,13 @@
     <script src="discussions.js"></script>
 
     <script>
+
+        const access = localStorage.getItem('accessibility') === 'true';
+
+        if (access) {
+            document.body.classList.add('large-font');
+        }
+
         async function loadSubjects() {
             try {
                 const response = await fetch('/subjects');
