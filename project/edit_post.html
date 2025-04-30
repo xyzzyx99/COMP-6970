@@ -12,7 +12,8 @@
 <div id="frame" class="container py-5">
     <h1 class="mb-4">Submit Content</h1>
 
-    <form method="POST" action="/createPost" enctype="multipart/form-data" id="contentForm" class="card p-4 shadow-sm">
+    <!-- <form method="POST" action="/createPost" enctype="multipart/form-data" id="contentForm" class="card p-4 shadow-sm"> -->
+    <form method="POST" enctype="multipart/form-data" id="contentForm" class="card p-4 shadow-sm">
         <div class="mb-3">
             <label for="textInput" class="form-label">Text:</label>
             <textarea id="textInput" name="textInput" class="form-control" rows="5"></textarea>
@@ -42,6 +43,40 @@
         const returnTo = params.get('returnTo') || '/';
         window.location.href = returnTo;
     }
+
+    /*document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const subjectName = params.get('subjectName');
+        const topicTitle = params.get('topicTitle');
+
+        if (subjectName && topicTitle) {
+            const form = document.getElementById('contentForm');
+            form.action = `/replyPost?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}`;
+            document.querySelector('h1').textContent = `Reply to: ${topicTitle}`;
+        }
+
+        showDiscussions(topicTitle, subjectName);
+
+    });*/
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const subjectName = params.get("subjectName");
+        const topicTitle = params.get("topicTitle");
+        const returnTo = params.get("returnTo");
+
+        if (subjectName && topicTitle) {
+            const form = document.getElementById("contentForm");
+            let actionUrl = `/replyPost?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}`;
+            if (returnTo) {
+                actionUrl += `&returnTo=${encodeURIComponent(returnTo)}`;
+            }
+            form.action = actionUrl;
+            document.querySelector("h1").textContent = `Reply to: ${topicTitle}`;
+        }
+    });
+
+
 </script>
 
 </body>

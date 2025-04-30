@@ -160,7 +160,7 @@ async function showDiscussions(topicTitle, subjectName) {
         replyBtn.textContent = 'Reply to Topic';
         replyBtn.onclick = () => {
 //            window.location.href = `edit_post.html?topicTitle=${topicTitle}&returnTo=` + encodeURIComponent(window.location.pathname);
-            window.location.href = `edit_post.html?topicTitle=${topicTitle}`;
+            window.location.href = `edit_post.html?subjectName=${subjectName}&topicTitle=${topicTitle}`;
 
             //alert(`Reply form for topic "${topicTitle}" under subject "${subjectName}" goes here.`);
         };

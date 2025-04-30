@@ -60,6 +60,59 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
+app.post('/createPost', upload.single('image'), async (req, res) => {
+    try {
+        const { title, textInput } = req.body;
+        const subjectName = req.query.subjectName;
+        const imageLocation = req.file ? `/uploads/${req.file.filename}` : '';
+
+        // Read existing XML
+        const xmlFile = fs.readFileSync('discussions.xml', 'utf-8');
+        const parser = new xml2js.Parser({ explicitArray: false });
+        const xmlDoc = await parser.parseStringPromise(xmlFile);
+
+        // Find subject
+        const subject = xmlDoc.courseDiscussions.subject.find(s => s.name === subjectName);
+        if (!subject) {
+            throw new Error('Subject not found');
+        }
+
+        // Create new topic with discussion
+        const newTopic = {
+            $: { title },
+            thread: {
+                discussion: {
+                    timestamp: new Date().toISOString(),
+                    username: 'anonymous', // Could be replaced with actual user system
+                    content: textInput,
+                    imageLocation
+                }
+            }
+        };
+
+        // Add topic to subject
+        if (!subject.topic) {
+            subject.topic = [];
+        }
+        if (!Array.isArray(subject.topic)) {
+            subject.topic = [subject.topic];
+        }
+        subject.topic.push(newTopic);
+
+        // Convert back to XML and save
+        const builder = new xml2js.Builder();
+        const newXml = builder.buildObject(xmlDoc);
+        fs.writeFileSync('discussions.xml', newXml);
+
+        res.redirect('/subjects.html');
+    } catch (error) {
+        console.error('Error creating post:', error);
+        res.status(500).send('Error creating post');
+    }
+});
+
+
+
 //const upload = multer({ limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit
 
 app.post('/createPost1', (req, res) => {
