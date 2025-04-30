@@ -24,6 +24,11 @@
             <input type="file" id="imageInput" name="image" class="form-control" accept="image/*">
         </div>
 
+        <div class="mb-3">
+            <label for="descriptionInput" class="form-label">Image Description:</label>
+            <input type="text" id="descriptionInput" name="description" class="form-control" placeholder="Describe the uploaded image">
+        </div>
+
         <!--            <button id = "submitButton" type="button" class="btn btn-success" onclick="submitContent()">Submit</button> -->
         <!-- <<div class="d-flex justify-content-end gap-2">  -->
         <button id="submitButton" type="submit" class="btn btn-success">Submit Post</button>
@@ -38,27 +43,6 @@
 <script type="module" src="edit_post.js"></script>
 
 <script>
-    function goBack() {
-        const params = new URLSearchParams(window.location.search);
-        const returnTo = params.get('returnTo') || '/';
-        window.location.href = returnTo;
-    }
-
-    /*document.addEventListener('DOMContentLoaded', () => {
-        const params = new URLSearchParams(window.location.search);
-        const subjectName = params.get('subjectName');
-        const topicTitle = params.get('topicTitle');
-
-        if (subjectName && topicTitle) {
-            const form = document.getElementById('contentForm');
-            form.action = `/replyPost?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}`;
-            document.querySelector('h1').textContent = `Reply to: ${topicTitle}`;
-        }
-
-        showDiscussions(topicTitle, subjectName);
-
-    });*/
-
     document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(window.location.search);
         const subjectName = params.get("subjectName");
@@ -68,15 +52,23 @@
         if (subjectName && topicTitle) {
             const form = document.getElementById("contentForm");
             let actionUrl = `/replyPost?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}`;
-            if (returnTo) {
-                actionUrl += `&returnTo=${encodeURIComponent(returnTo)}`;
-            }
+            if (returnTo) actionUrl += `&returnTo=${encodeURIComponent(returnTo)}`;
             form.action = actionUrl;
+
+            // Set page heading
             document.querySelector("h1").textContent = `Reply to: ${topicTitle}`;
+
+            // Conditional description validation
+            form.addEventListener("submit", (e) => {
+                const image = document.getElementById("imageInput").files[0];
+                const description = document.getElementById("descriptionInput").value.trim();
+                if (image && description === "") {
+                    e.preventDefault();
+                    alert("Please provide a description for the uploaded image.");
+                }
+            });
         }
     });
-
-
 </script>
 
 </body>

@@ -20,7 +20,9 @@ const xmlFilePath = path.join(__dirname, '..', 'discussions.xml'); // still post
 
 router.post('/createPost', upload.single('image'), async (req, res) => {
     try {
-        const { title, textInput } = req.body;
+        //const { title, textInput } = req.body;
+        const { title, textInput, description } = req.body;
+
         const subjectName = req.query.subjectName;
         const imageLocation = req.file ? `/uploads/${req.file.filename}` : '';
 
@@ -29,12 +31,25 @@ router.post('/createPost', upload.single('image'), async (req, res) => {
         const parser = new xml2js.Parser({ explicitArray: false });
         const xmlObj = await parser.parseStringPromise(xmlRaw);
 
+        /*const discussion = {
+            timestamp: new Date().toISOString(),
+            username: 'anonymous_user',
+            content: textInput,
+            imageLocation: imageLocation
+        };*/
+
         const discussion = {
             timestamp: new Date().toISOString(),
             username: 'anonymous_user',
             content: textInput,
             imageLocation: imageLocation
         };
+
+        //if (imageLocation && description && description.trim() !== '') {
+        if (imageLocation && description?.trim()) {
+                discussion.description = description.trim();
+            }
+        //}
 
         let subjects = xmlObj.courseDiscussions.subject;
         if (!Array.isArray(subjects)) subjects = [subjects];
@@ -93,7 +108,10 @@ router.post('/createPost', upload.single('image'), async (req, res) => {
 
 router.post('/replyPost', upload.single('image'), async (req, res) => {
     try {
-        const { textInput } = req.body;
+//        const { textInput } = req.body;
+        const { textInput, description } = req.body;
+        //const { title, textInput, description } = req.body;
+
         const subjectName = req.query.subjectName;
         const topicTitle = req.query.topicTitle;
         const imageLocation = req.file ? `/uploads/${req.file.filename}` : '';
@@ -103,12 +121,25 @@ router.post('/replyPost', upload.single('image'), async (req, res) => {
         const parser = new xml2js.Parser({ explicitArray: false });
         const xmlObj = await parser.parseStringPromise(xmlRaw);
 
+        /*const discussion = {
+            timestamp: new Date().toISOString(),
+            username: 'anonymous_user',
+            content: textInput,
+            imageLocation: imageLocation
+        };*/
+
         const discussion = {
             timestamp: new Date().toISOString(),
             username: 'anonymous_user',
             content: textInput,
             imageLocation: imageLocation
         };
+
+//        if (imageLocation && description && description.trim() !== '') {
+        if (imageLocation && description?.trim()) {
+
+            discussion.description = description.trim();
+        }
 
         let subjects = xmlObj.courseDiscussions.subject;
         if (!Array.isArray(subjects)) subjects = [subjects];

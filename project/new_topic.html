@@ -31,6 +31,11 @@
             <input type="file" id="imageInput" name="image" class="form-control" accept="image/*">
         </div>
 
+        <div class="mb-3">
+            <label for="descriptionInput" class="form-label">Image Description:</label>
+            <input type="text" id="descriptionInput" name="description" class="form-control" placeholder="Describe the uploaded image">
+        </div>
+
         <!--            <button id = "submitButton" type="button" class="btn btn-success" onclick="submitContent()">Submit</button> -->
         <button id="submitButton" type="submit" class="btn btn-success">Submit Post</button>
     </form>
@@ -41,7 +46,7 @@
 
 <script type="module" src="edit_post.js"></script>
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const subject = urlParams.get('subjectName');
@@ -51,7 +56,30 @@
             document.querySelector('h1').textContent += ` – ${subject}`;
         }
     });
+</script> -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const subject = urlParams.get("subjectName");
+        if (subject) {
+            document.querySelector("form").action = `/createPost?subjectName=${encodeURIComponent(subject)}`;
+            document.querySelector("h1").textContent += ` – ${subject}`;
+        }
+
+        // Conditional validation: description required only if image is selected
+        const form = document.getElementById("contentForm");
+        form.addEventListener("submit", (e) => {
+            const image = document.getElementById("imageInput").files[0];
+            const description = document.getElementById("descriptionInput").value.trim();
+            if (image && description === "") {
+                e.preventDefault();
+                alert("Please provide a description for the uploaded image.");
+            }
+        });
+    });
 </script>
+
 
 </body>
 </html>

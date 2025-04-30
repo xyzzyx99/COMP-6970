@@ -24,18 +24,18 @@
             const response = await fetch('/discussions.xml');
             const xmlText = await response.text();
             const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
 
-            const subjects = Array.from(xmlDoc.getElementsByTagName("subject"));
-            const subject = subjects.find(s => s.getAttribute("name") === subjectName);
-            if (!subject) throw new Error("Subject not found");
+            const subjects = Array.from(xmlDoc.getElementsByTagName('subject'));
+            const subject = subjects.find(s => s.getAttribute('name') === subjectName);
+            if (!subject) throw new Error('Subject not found');
 
-            const topics = Array.from(subject.getElementsByTagName("topic"));
-            const topic = topics.find(t => t.getAttribute("title") === topicTitle);
-            if (!topic) throw new Error("Topic not found");
+            const topics = Array.from(subject.getElementsByTagName('topic'));
+            const topic = topics.find(t => t.getAttribute('title') === topicTitle);
+            if (!topic) throw new Error('Topic not found');
 
-            const thread = topic.getElementsByTagName("thread")[0];
-            const discussions = thread ? Array.from(thread.getElementsByTagName("discussion")) : [];
+            const thread = topic.getElementsByTagName('thread')[0];
+            const discussions = thread ? Array.from(thread.getElementsByTagName('discussion')) : [];
 
             discussions.sort((a, b) => {
                 const timeA = new Date(a.getElementsByTagName('timestamp')[0].textContent);
@@ -49,27 +49,27 @@
           <tbody>`;
 
             discussions.forEach((d) => {
-                const timestamp = new Date(d.getElementsByTagName("timestamp")[0]?.textContent || '').toLocaleString();
-                const username = d.getElementsByTagName("username")[0]?.textContent || '';
-                const content = d.getElementsByTagName("content")[0]?.textContent || '';
-                const imageLocation = d.getElementsByTagName("imageLocation")[0]?.textContent || '';
-
+                const timestamp = new Date(d.getElementsByTagName('timestamp')[0]?.textContent || '').toLocaleString();
+                const username = d.getElementsByTagName('username')[0]?.textContent || '';
+                const content = d.getElementsByTagName('content')[0]?.textContent || '';
+                const imageLocation = d.getElementsByTagName('imageLocation')[0]?.textContent || '';
+                const description = d.getElementsByTagName('description')[0]?.textContent || 'Discussion image';
                 discussionsHtml += `
-          <tr>
-            <td style="width: 200px">
-              <strong>${username}</strong><br>
-              <small class="text-muted">${timestamp}</small>
-            </td>
-            <td>
-              <p>${content}</p>
-              ${imageLocation ? `<img src="${imageLocation}" class="img-fluid" alt="Discussion image">` : ''}
-            </td>
-          </tr>`;
+  <tr>
+    <td style="width: 200px">
+      <strong>${username}</strong><br>
+      <small class="text-muted">${timestamp}</small>
+    </td>
+    <td>
+      <p>${content}</p>
+      ${imageLocation ? `<img src="${imageLocation}" class="img-fluid" alt="${description}">` : ''}
+    </td>
+  </tr>`;
             });
 
             discussionsHtml += `</tbody></table>`;
 
-            const container = document.getElementById("discussionsContainer");
+            const container = document.getElementById('discussionsContainer');
 
             // Build buttons
             const backBtn = document.createElement('button');
@@ -84,11 +84,11 @@
             const replyBtn = document.createElement('button');
             replyBtn.className = 'btn btn-success';
             replyBtn.textContent = 'Reply to Topic';
+
+
             replyBtn.onclick = () => {
                 const returnTo = `view_topic.html?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}`;
-                //window.location.href = `edit_post.html?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}&returnTo=${encodeURIComponent(returnTo)}`;
-
-                window.location.href = `edit_post.html?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}&returnTo=loadSubjectDiscussions(subjectName)`;
+                window.location.href = `edit_post.html?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}&returnTo=${encodeURIComponent(returnTo)}`;
             };
 
             const buttonRow = document.createElement('div');
@@ -109,11 +109,13 @@
             const contentDiv = document.createElement('div');
             contentDiv.innerHTML = discussionsHtml;
             container.appendChild(contentDiv);
-        } catch (err) {
-            console.error("Error loading thread:", err);
-            document.getElementById("discussionsContainer").innerHTML = '<div class="alert alert-danger">Error loading discussion thread.</div>';
+        } catch
+            (err) {
+            console.error('Error loading thread:', err);
+            document.getElementById('discussionsContainer').innerHTML = '<div class="alert alert-danger">Error loading discussion thread.</div>';
         }
     }
+
 
     loadThread();
 </script>
