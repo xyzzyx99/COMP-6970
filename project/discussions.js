@@ -1,4 +1,19 @@
 // Function to fetch and display discussions for a specific subject
+
+function createLogoutButton() {
+    const logoutBtn = document.createElement('button');
+    logoutBtn.className = 'btn btn-warning';
+    logoutBtn.textContent = 'Log out';
+    logoutBtn.onclick = () => {
+        localStorage.clear(); // Clear session-like data
+        window.location.href = 'index.html'; // Or your home page
+    };
+    logoutBtn.style.position = 'absolute';
+    logoutBtn.style.top = '10px';
+    logoutBtn.style.right = '10px';
+    return logoutBtn;
+}
+
 async function loadSubjectDiscussions(subjectName) {
     try {
         // Fetch XML from backend
@@ -96,6 +111,9 @@ async function loadSubjectDiscussions(subjectName) {
         const tableWrapper = document.createElement('div');
         tableWrapper.innerHTML = topicsHtml;
         container.appendChild(tableWrapper);
+
+        document.body.appendChild(createLogoutButton());
+
     } catch (error) {
         console.error('Error loading discussions:', error);
         document.body.innerHTML = '<div class="alert alert-danger m-5">Error loading discussions</div>';
@@ -194,13 +212,11 @@ async function showDiscussions(topicTitle, subjectName) {
         const contentDiv = document.createElement('div');
         contentDiv.innerHTML = discussionsHtml;
         container.appendChild(contentDiv);
+
+        document.body.appendChild(createLogoutButton());
+
     } catch (error) {
         console.error('Error showing discussions:', error);
         document.body.innerHTML = '<div class="alert alert-danger m-5">Error loading discussions</div>';
     }
 }
-
-/*function replyToForm() {
-    //const userId = 42; // example parameter
-    window.location.href = `edit_post.html?$topicTitle=${topicTitle}`;
-}*/
