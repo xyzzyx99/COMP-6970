@@ -12,3 +12,13 @@
 .large-font input[type="checkbox"] {
     transform: scale(1.5);
 }
+
+.large-font input[type="text"],
+.large-font input[type="password"],
+.large-font textarea {
+    font-size: 1.25em;
+}
+
+.large-font input[type="file"] {
+    font-size: 1.1em;
+    padding: 0.4em;}
