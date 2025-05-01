@@ -64,11 +64,11 @@
 }
 
 #contentForm {
-    max-width: 1000px !important; /* or whatever original width you want */
+    max-width: 1000px !important; /* make form better */
     width: 100% !important;
 }
 
 #frame {
-    max-width: 1600px !important; /* or whatever original width you want */
+    max-width: 1600px !important; /* make form better */
     width: 90% !important;
 }
