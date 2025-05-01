@@ -6,14 +6,10 @@ const form = document.getElementById('contentForm');
 // First remove any previous classes
 form.classList.remove('accessibility-large', 'accessibility-normal');
 
-let accessibility = 'large'
-//let accessibility = 'normal'
+const access = localStorage.getItem('accessibility') === 'true';
 
-// Add based on accessibility setting
-if (accessibility === 'large') {
-    form.classList.add('accessibility-large');
-} else {
-    form.classList.add('accessibility-normal');
+if (access) {
+    document.body.classList.add('large-font');
 }
 
 async function submitContent() {

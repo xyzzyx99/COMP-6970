@@ -6,11 +6,12 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="accessibility.css">
 </head>
 <body class="bg-light">
 
 <div id="frame" class="container py-5">
-    <h1 class="mb-4">Submit Content</h1>
+    <h3 class="mb-4">Submit Content</h3>
 
     <!-- <form method="POST" action="/createPost" enctype="multipart/form-data" id="contentForm" class="card p-4 shadow-sm"> -->
     <form method="POST" enctype="multipart/form-data" id="contentForm" class="card p-4 shadow-sm">
@@ -26,7 +27,8 @@
 
         <div class="mb-3">
             <label for="descriptionInput" class="form-label">Image Description:</label>
-            <input type="text" id="descriptionInput" name="description" class="form-control" placeholder="Describe the uploaded image">
+            <input type="text" id="descriptionInput" name="description" class="form-control"
+                   placeholder="Describe the uploaded image">
         </div>
 
         <!--            <button id = "submitButton" type="button" class="btn btn-success" onclick="submitContent()">Submit</button> -->
@@ -45,11 +47,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(window.location.search);
-        const subjectName = params.get("subjectName");
-        const topicTitle = params.get("topicTitle");
-        const returnTo = params.get("returnTo");
+        const subjectName = params.get('subjectName');
+        const topicTitle = params.get('topicTitle');
+        const returnTo = params.get('returnTo');
 
-        const form = document.getElementById("contentForm");
+        const form = document.getElementById('contentForm');
 
         if (subjectName && topicTitle) {
             let actionUrl = `/replyPost?subjectName=${encodeURIComponent(subjectName)}&topicTitle=${encodeURIComponent(topicTitle)}`;
@@ -57,26 +59,26 @@
             form.action = actionUrl;
 
             // Set page heading
-            document.querySelector("h1").textContent = `Reply to: ${topicTitle}`;
+            document.querySelector('h3').textContent = `Reply to: ${topicTitle}`;
         }
 
         // Add username from localStorage as a hidden field before submit
-        form.addEventListener("submit", (e) => {
-            const username = localStorage.getItem("username");
+        form.addEventListener('submit', (e) => {
+            const username = localStorage.getItem('username');
             if (username) {
-                const hiddenInput = document.createElement("input");
-                hiddenInput.type = "hidden";
-                hiddenInput.name = "username";
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'username';
                 hiddenInput.value = username;
                 form.appendChild(hiddenInput);
             }
 
             // Conditional validation: description required only if image is selected
-            const image = document.getElementById("imageInput").files[0];
-            const description = document.getElementById("descriptionInput").value.trim();
-            if (image && description === "") {
+            const image = document.getElementById('imageInput').files[0];
+            const description = document.getElementById('descriptionInput').value.trim();
+            if (image && description === '') {
                 e.preventDefault();
-                alert("Please provide a description for the uploaded image.");
+                alert('Please provide a description for the uploaded image.');
             }
         });
     });
