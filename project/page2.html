@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Input Page</title>
+</head>
+<body>
+<form id="userForm">
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">email:</label>
+    <input type="text" id="email" name="email" required>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <div class="form-group">
+    <label for="confirm-password">Confirm Password:</label>
+    <input type="password" id="confirm-password" name="confirm-password" required>
+  </div>
+  <div class="checkbox-group">
+    <input type="checkbox" id="accessibility" name="accessibility" >
+    <label for="accessibility"><big>Need accessibility?</big></label>
+    <p><big>Check the box if you need accessibility.</big></p>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn">Submit</button>
+  </div>
+</form>
+
+<script type="module" src="form.js"></script> <!-- Note: type="module" -->
+</body>
+</html>

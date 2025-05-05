@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Content</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+<div class="container py-5">
+    <h1 class="mb-4">Submit Content</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <form id="contentForm" class="card p-4 shadow-sm">
+                <div class="mb-3">
+                    <label for="textInput" class="form-label">Text:</label>
+                    <textarea id="textInput" name="textInput" class="form-control" rows="5"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="imageInput" class="form-label">Upload Image:</label>
+                    <input type="file" id="imageInput" name="imageInput" class="form-control" accept="image/*">
+                </div>
+
+                <button type="button" class="btn btn-success" onclick="submitContent()">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    /* Your submitContent() function here */
+</script>
+</body>
+</html>

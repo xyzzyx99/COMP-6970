@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+</head>
+<body>
+<h1>User Profile</h1>
+<div id="profile"></div>
+
+<script type="module">
+  async function loadProfile() {
+    // Fetch the XML file
+    const response = await fetch('/profile');
+    const xmlText = await response.text();
+
+    // Parse the XML string into a DOM object
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+
+    // Extract data
+    const username = xmlDoc.getElementsByTagName('username')[0].textContent;
+    const email = xmlDoc.getElementsByTagName('email')[0].textContent;
+
+    // Build HTML dynamically
+    const profileDiv = document.getElementById('profile');
+    profileDiv.innerHTML = `
+        <p><strong>Name:</strong> ${username}</p>
+        <p><strong>Email:</strong> ${email}</p>
+      `;
+  }
+
+  loadProfile();
+</script>
+</body>
+</html>

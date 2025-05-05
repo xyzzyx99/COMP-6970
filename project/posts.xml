@@ -1,0 +1,51 @@
+<posts>
+  <post>
+    <text>Welcome to the Study Group!</text>
+    <image>/uploads/welcome.jpg</image>
+  </post>
+
+  <post>
+    <text>Discussion on Calculus homework problems.</text>
+    <image>/uploads/calculus.png</image>
+  </post>
+
+  <post>
+    <text>Ideas for the History group project meeting.</text>
+    <image>/uploads/history.jpg</image>
+  </post>
+
+  <post>
+    <text>Physics experiments we can try at home!</text>
+    <image>/uploads/physics.jpg</image>
+  </post>
+
+  <post>
+    <text>Reminder: Submit your assignment by Friday.</text>
+    <image></image> <!-- No image uploaded for this post -->
+  </post>
+
+  <post>
+    <text>Anyone interested in forming a study group for Computer Science?</text>
+    <image>/uploads/cs.jpg</image>
+  </post>
+  <post>
+    <text>This is a test.</text>
+    <image>/uploads/1745995598100-testflight.png</image>
+  </post>
+  <post>
+    <text>This is a test.</text>
+    <image>/uploads/1745995945775-testflight.png</image>
+  </post>
+  <post>
+    <text>Test</text>
+    <image></image>
+  </post>
+  <post>
+    <text>Test</text>
+    <image>/uploads/1745997931613-testflight.png</image>
+  </post>
+  <post>
+    <text>Test</text>
+    <image>/uploads/1745998118718-testflight.png</image>
+  </post>
+</posts>
